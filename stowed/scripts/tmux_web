@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# Creates a tmux session with 3 windows
+# - editor
+# - server
+# - terminal
+# The first argument is used to override the session name
+# which will default to the current folders name
+
+SESSION=${1:-$(basename $(pwd))}
+
+tmux new -s $SESSION -d -n editor
+tmux new-win -t $SESSION:2 -d -n server
+tmux new-win -t $SESSION:3 -d -n terminal
