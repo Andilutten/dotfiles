@@ -1,7 +1,6 @@
-#!/usr/bin/fish
+#!/bin/bash
 
 # This scripts runs my general session for tmux
-
 # Create the session and name the default window "music"
 tmux new -s General -n music -d
 tmux send-keys -t General:music "ncmpcpp -S search_engine" Enter

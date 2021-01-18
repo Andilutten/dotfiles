@@ -1,0 +1,28 @@
+#!/bin/bash
+
+export MANPAGER="vim -c MANPAGER -"
+export EDITOR="vim"
+
+export GOPATH=$HOME/.local/go
+export GOBIN=$GOPATH/bin
+
+# set PATH so it includes global npm bin directory if it exists
+if [ -d "$HOME/.local/npm/bin" ] ; then
+    PATH="$HOME/.local/npm/bin:$PATH"
+fi
+
+# set PATH so it includes GOBIN directory if it exists
+if [ -d "$GOBIN" ] ; then
+    PATH="$GOBIN:$PATH"
+fi
+
+# add scripts directory to path
+if [ -d "$HOME/Scripts" ] ; then
+	PATH="$HOME/Scripts:$PATH"
+fi
+
+BASE16_SHELL="$HOME/.config/base16-shell/"
+[ -n "$PS1" ] && \
+[ ! -n "$VIM" ] && \
+    [ -s "$BASE16_SHELL/profile_helper.sh" ] && \
+        eval "$("$BASE16_SHELL/profile_helper.sh")"

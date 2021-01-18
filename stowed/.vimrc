@@ -1,6 +1,9 @@
 " Vim runtime configuration
 " Author: Andreas Malmqvist
 
+let $MYVIMRC="$HOME/.vimrc"
+let $MYTMUXRC="$HOME/.tmux.conf"
+
 syntax on
 filetype plugin on
 
@@ -23,6 +26,7 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-speeddating'
 Plug 'tpope/vim-sleuth'
+Plug 'tpope/vim-rsi'
 Plug 'wincent/terminus'
 
 " Integration plugins
@@ -53,6 +57,7 @@ call plug#end()
 
 " variables {{{ 
 let mapleader=' '
+let maplocalleader='`'
 let g:vimwiki_list = [#{path: '~/Documents/'}]
 let g:coc_global_extensions = [
 			\ 'coc-marketplace', 
