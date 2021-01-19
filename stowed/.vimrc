@@ -27,6 +27,7 @@ Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-speeddating'
 Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-rsi'
+Plug 'tpope/vim-vinegar'
 Plug 'wincent/terminus'
 
 " Integration plugins
@@ -58,6 +59,8 @@ call plug#end()
 " variables {{{ 
 let mapleader=' '
 let maplocalleader='`'
+let g:netrw_localrmdir='rm -r'
+let g:netrw_banner=0
 let g:vimwiki_list = [#{path: '~/Documents/'}]
 let g:coc_global_extensions = [
 			\ 'coc-marketplace', 
@@ -81,7 +84,7 @@ endif
 
 " {{{ options
 
-
+set noswapfile
 set encoding=utf8
 set hidden magic
 set tabstop=4 shiftwidth=4
@@ -217,7 +220,7 @@ augroup documenttypes "{{{
 	"" for 'document' filetypes like markdown
 	"" and wiki files.
 	autocmd!
-	let filetypes = ['markdown', 'vimwiki', 'vim']
+	let filetypes = ['markdown', 'vimwiki']
 	execute("autocmd FileType " . filetypes->join(',') . " setl nonumber norelativenumber")
 augroup END "}}}
 
@@ -265,5 +268,10 @@ augroup dotnet "{{{
   autocmd!
   autocmd FileType cs call <SID>coc_setup()
 augroup END "}}}
+
+augroup lua
+	autocmd!
+	autocmd FileType lua call <SID>coc_setup()
+augroup END
 
 " }}}
