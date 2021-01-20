@@ -6,6 +6,9 @@ export EDITOR="vim"
 export GOPATH=$HOME/.local/go
 export GOBIN=$GOPATH/bin
 
+# set Ps
+export PS1="\[\e]0;\u@\h: \w\a\]${debian_chroot:+($debian_chroot)}\[\033[32m\]\u@\h\[\033[00m\]:\[\033[34m\]\w\[\033[00m\]\$ "
+
 # set PATH so it includes global npm bin directory if it exists
 if [ -d "$HOME/.local/npm/bin" ] ; then
     PATH="$HOME/.local/npm/bin:$PATH"
