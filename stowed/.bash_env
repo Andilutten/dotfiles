@@ -1,13 +1,14 @@
 #!/bin/bash
 
+# Common env stuff
 export MANPAGER="vim -c MANPAGER -"
 export EDITOR="vim"
+export PROJECTS="$HOME/Projects"
+export SCRIPTS="$HOME/Scripts"
 
+# Go environment
 export GOPATH=$HOME/.local/go
 export GOBIN=$GOPATH/bin
-
-# set Ps
-export PS1="\[\e]0;\u@\h: \w\a\]${debian_chroot:+($debian_chroot)}\[\033[32m\]\u@\h\[\033[00m\]:\[\033[34m\]\w\[\033[00m\]\$ "
 
 # set PATH so it includes global npm bin directory if it exists
 if [ -d "$HOME/.local/npm/bin" ] ; then
@@ -24,6 +25,25 @@ if [ -d "$HOME/Scripts" ] ; then
 	PATH="$HOME/Scripts:$PATH"
 fi
 
+# Functions
+
+new_script () {
+	local script_name=${1:-'my_new_script'}
+
+	cd $SCRIPTS && cat << EOF >> $script_name
+#!/bin/bash
+# $script_name
+# Author: $USER
+EOF
+	chmod u+x $script_name
+	$EDITOR $script_name
+}
+
+# Appearance
+export PS1="\[\e]0;\u@\h: \w\a\]${debian_chroot:+($debian_chroot)}\[\033[32m\]\u@\h\[\033[00m\]:\[\033[34m\]\w\[\033[00m\]\$ "
+
+# Base16 shell configuration
+# See https://github.com/chriskempson/base16-shell
 BASE16_SHELL="$HOME/.config/base16-shell/"
 [ -n "$PS1" ] && \
 [ ! -n "$VIM" ] && \

@@ -37,6 +37,8 @@ Plug 'lambdalisue/vim-manpager'
 
 " Theming
 Plug 'chriskempson/base16-vim'
+Plug 'itchyny/lightline.vim'
+Plug 'daviesjamie/vim-base16-lightline'
 Plug 'jeffkreeftmeijer/vim-dim'
 
 " IDE features
@@ -64,8 +66,24 @@ let g:netrw_banner=0
 let g:vimwiki_list = [#{path: '~/Documents/'}]
 let g:coc_global_extensions = [
 			\ 'coc-marketplace', 
-			\ 'coc-lists'
+			\ 'coc-lists',
+			\ 'coc-git',
+			\ 'coc-explorer'
 			\ ]
+let g:lightline = #{
+			\ colorscheme: 'base16',
+			\ active: #{
+			\   left: [ [ 'mode', 'paste' ],
+			\             [ 'cocstatus', 'readonly', 'filename', 'modified' ] ]
+			\ },
+			\ tabline: #{
+			\ 	right: [ ['gitstatus'] ],
+			\ },
+			\ component_function: #{
+			\   cocstatus: 'coc#status',
+			\ 	gitstatus: 'GitStatus',
+			\ },
+			\ }
 "}}}
 
 " compatibility {{{
@@ -84,13 +102,16 @@ endif
 
 " {{{ options
 
+set showtabline=2
+set laststatus=2
 set noswapfile
 set encoding=utf8
 set hidden magic
 set tabstop=4 shiftwidth=4
 set hlsearch incsearch
 set noexpandtab
-set signcolumn=number
+set signcolumn=auto
+set colorcolumn=121
 set path=**
 set ignorecase smartcase
 set number relativenumber
@@ -118,6 +139,10 @@ nnoremap <leader>g :Git
 " }}}
 
 " functions {{{
+
+function! GitStatus() abort
+	return get(g:, 'coc_git_status', '')
+endfunction
 
 function! s:get_visual_selection()
     " Why is this not a built-in Vim script function?!
@@ -186,11 +211,12 @@ augroup theming " {{{
 	autocmd!
 	autocmd ColorScheme * highlight EndOfBuffer ctermfg=0 guifg=bg
 	autocmd ColorScheme default call <SID>default_colorscheme_overrides()
-	" if filereadable(expand("~/.vimrc_background"))
-	"   let base16colorspace=256
-	"   source ~/.vimrc_background
-	" endif
-	colors dim
+	if filereadable(expand("~/.vimrc_background"))
+		let base16colorspace=256
+		source ~/.vimrc_background
+  	else
+	  	colors dim
+  	endif
 augroup END " }}}
 
 augroup generic "{{{
