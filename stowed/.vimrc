@@ -10,9 +10,9 @@ filetype plugin on
 " plugins {{{
 
 if empty(glob('~/.vim/autoload/plug.vim'))
-  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+	silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+				\ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+	autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
 call plug#begin('~/.vim/plugged')
@@ -36,10 +36,8 @@ Plug 'junegunn/gv.vim'
 Plug 'lambdalisue/vim-manpager'
 
 " Theming
-Plug 'chriskempson/base16-vim'
-Plug 'itchyny/lightline.vim'
-Plug 'daviesjamie/vim-base16-lightline'
-Plug 'jeffkreeftmeijer/vim-dim'
+Plug 'tomasiser/vim-code-dark'
+Plug 'vim-airline/vim-airline'
 
 " IDE features
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -71,20 +69,9 @@ let g:coc_global_extensions = [
 			\ 'coc-git',
 			\ 'coc-explorer'
 			\ ]
-let g:lightline = #{
-			\ colorscheme: 'base16',
-			\ active: #{
-			\   left: [ [ 'mode', 'paste' ],
-			\             [ 'cocstatus', 'readonly', 'filename', 'modified' ] ]
-			\ },
-			\ tabline: #{
-			\ 	right: [ ['gitstatus'] ],
-			\ },
-			\ component_function: #{
-			\   cocstatus: 'coc#status',
-			\ 	gitstatus: 'GitStatus',
-			\ },
-			\ }
+let g:airline_theme = 'codedark'
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#formatter = 'unique_tail'
 "}}}
 
 " compatibility {{{
@@ -92,11 +79,17 @@ let g:lightline = #{
 set nocompatible
 
 if &term =~ '^screen'
-    " tmux will send xterm-style keys when its xterm-keys option is on
-    execute "set <xUp>=\e[1;*A"
-    execute "set <xDown>=\e[1;*B"
-    execute "set <xRight>=\e[1;*C"
-    execute "set <xLeft>=\e[1;*D"
+	" tmux will send xterm-style keys when its xterm-keys option is on
+	execute "set <xUp>=\e[1;*A"
+	execute "set <xDown>=\e[1;*B"
+	execute "set <xRight>=\e[1;*C"
+	execute "set <xLeft>=\e[1;*D"
+endif
+
+if exists('+termguicolors')
+	let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+	let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+	set termguicolors
 endif
 
 " }}}
@@ -134,6 +127,10 @@ set t_Co=16
 
 " mappings {{{
 
+nnoremap <leader>bn :bn<cr>
+nnoremap <leader>bp :bp<cr>
+nnoremap <leader>bd :bd<cr>
+
 nnoremap <leader>l :CocList<cr>
 nnoremap <leader>g :Git
 
@@ -146,16 +143,16 @@ function! GitStatus() abort
 endfunction
 
 function! s:get_visual_selection()
-    " Why is this not a built-in Vim script function?!
-    let [line_start, column_start] = getpos("'<")[1:2]
-    let [line_end, column_end] = getpos("'>")[1:2]
-    let lines = getline(line_start, line_end)
-    if len(lines) == 0
-        return ''
-    endif
-    let lines[-1] = lines[-1][: column_end - (&selection == 'inclusive' ? 1 : 2)]
-    let lines[0] = lines[0][column_start - 1:]
-    return join(lines, "\n")
+	" Why is this not a built-in Vim script function?!
+	let [line_start, column_start] = getpos("'<")[1:2]
+	let [line_end, column_end] = getpos("'>")[1:2]
+	let lines = getline(line_start, line_end)
+	if len(lines) == 0
+		return ''
+	endif
+	let lines[-1] = lines[-1][: column_end - (&selection == 'inclusive' ? 1 : 2)]
+	let lines[0] = lines[0][column_start - 1:]
+	return join(lines, "\n")
 endfunction
 
 function! s:default_colorscheme_overrides() abort
@@ -166,42 +163,42 @@ function! s:default_colorscheme_overrides() abort
 endfunction
 
 function! s:coc_setup() abort "{{{
-  " This configuration is taken from coc github page
-  nmap <silent> gd <Plug>(coc-definition)
-  nmap <silent> gr <Plug>(coc-references)
-  nmap <silent> <leader>r <Plug>(coc-rename)
-  nnoremap <silent> gh :call <SID>show_documentation()<CR>
-  nnoremap <silent> <leader>l :CocList<cr>
-  nnoremap <silent> <leader>. :CocAction<cr>
-  vnoremap <silent> <leader>. :CocAction<cr>
-  inoremap <silent><expr> <c-@> coc#refresh()
+	" This configuration is taken from coc github page
+	nmap <silent> gd <Plug>(coc-definition)
+	nmap <silent> gr <Plug>(coc-references)
+	nmap <silent> <leader>r <Plug>(coc-rename)
+	nnoremap <silent> gh :call <SID>show_documentation()<CR>
+	nnoremap <silent> <leader>l :CocList<cr>
+	nnoremap <silent> <leader>. :CocAction<cr>
+	vnoremap <silent> <leader>. :CocAction<cr>
+	inoremap <silent><expr> <c-@> coc#refresh()
 
-  xmap if <Plug>(coc-funcobj-i)
-  omap if <Plug>(coc-funcobj-i)
-  xmap af <Plug>(coc-funcobj-a)
-  omap af <Plug>(coc-funcobj-a)
-  xmap ic <Plug>(coc-classobj-i)
-  omap ic <Plug>(coc-classobj-i)
-  xmap ac <Plug>(coc-classobj-a)
-  omap ac <Plug>(coc-classobj-a)
+	xmap if <Plug>(coc-funcobj-i)
+	omap if <Plug>(coc-funcobj-i)
+	xmap af <Plug>(coc-funcobj-a)
+	omap af <Plug>(coc-funcobj-a)
+	xmap ic <Plug>(coc-classobj-i)
+	omap ic <Plug>(coc-classobj-i)
+	xmap ac <Plug>(coc-classobj-a)
+	omap ac <Plug>(coc-classobj-a)
 
-  if exists('*complete_info')
-    inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
-  else
-    inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-  endif
+	if exists('*complete_info')
+		inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+	else
+		inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+	endif
 
-  function! s:show_documentation()
-    if (index(['vim','help'], &filetype) >= 0)
-      execute 'h '.expand('<cword>')
-    else
-      call CocAction('doHover')
-    endif
-  endfunction
+	function! s:show_documentation()
+		if (index(['vim','help'], &filetype) >= 0)
+			execute 'h '.expand('<cword>')
+		else
+			call CocAction('doHover')
+		endif
+	endfunction
 
-  command! -nargs=0 Format :call CocAction('format')
-  command! -nargs=? Fold :call CocAction('fold', <f-args>)
-  command! -nargs=0 OR   :call CocAction('runCommand', 'editor.action.organizeImport')
+	command! -nargs=0 Format :call CocAction('format')
+	command! -nargs=? Fold :call CocAction('fold', <f-args>)
+	command! -nargs=0 OR   :call CocAction('runCommand', 'editor.action.organizeImport')
 endfunction "}}}
 
 " }}}
@@ -212,12 +209,7 @@ augroup theming " {{{
 	autocmd!
 	autocmd ColorScheme * highlight EndOfBuffer ctermfg=0 guifg=bg
 	autocmd ColorScheme default call <SID>default_colorscheme_overrides()
-	if filereadable(expand("~/.vimrc_background"))
-		let base16colorspace=256
-		source ~/.vimrc_background
-  	else
-	  	colors dim
-  	endif
+	colors codedark
 augroup END " }}}
 
 augroup generic "{{{
@@ -255,7 +247,7 @@ augroup cfamily "{{{
 	autocmd!
 	autocmd FileType c,cpp packadd termdebug
 	autocmd FileType c,cpp compiler gcc
-    autocmd FileType c,cpp call <SID>coc_setup()
+	autocmd FileType c,cpp call <SID>coc_setup()
 
 	if executable('devhelp')
 		command! DevHelp call job_start('devhelp --search=' . expand('<cword>'))
@@ -264,7 +256,7 @@ augroup END "}}}
 
 augroup golang "{{{
 	autocmd!
-    autocmd FileType go call <SID>coc_setup()
+	autocmd FileType go call <SID>coc_setup()
 	autocmd FileType go compiler go
 	autocmd FileType go setlocal tabstop=8 shiftwidth=8 noexpandtab
 augroup END "}}}
@@ -273,7 +265,7 @@ augroup typescript "{{{
 	autocmd!
 	highlight! link typescriptImport Keyword
 	highlight! link typescriptExport Keyword
-    autocmd FileType typescript,typescriptreact,javascript,javascriptreact call <SID>coc_setup()
+	autocmd FileType typescript,typescriptreact,javascript,javascriptreact call <SID>coc_setup()
 	autocmd FileType typescript,typescriptreact,javascript,javascriptreact setlocal 
 				\ tabstop=2 
 				\ shiftwidth=2 
@@ -287,13 +279,13 @@ augroup gdscript "{{{
 augroup END "}}}
 
 augroup python "{{{
-  autocmd!
-  autocmd FileType python call <SID>coc_setup()
+	autocmd!
+	autocmd FileType python call <SID>coc_setup()
 augroup END "}}}
 
 augroup dotnet "{{{
-  autocmd!
-  autocmd FileType cs call <SID>coc_setup()
+	autocmd!
+	autocmd FileType cs call <SID>coc_setup()
 augroup END "}}}
 
 augroup lua
