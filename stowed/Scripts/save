@@ -1,0 +1,9 @@
+#!/bin/bash
+# save saves the current git repo by auto adding, and commiting the
+# changes.
+# Author: Andreas Malmqvist
+
+commit_message=${1:-'Updates'}
+
+git add .
+git commit -m $commit_message

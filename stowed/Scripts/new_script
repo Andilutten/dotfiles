@@ -1,0 +1,15 @@
+#!/bin/bash
+# new_script Creates a new script
+# Author: Andreas Malmqvist
+
+script_name=${1:-'my_new_script'}
+
+cd $SCRIPTS && cat << EOF >> $script_name
+#!/bin/bash
+# $script_name
+# Author: $(git config --global --get user.name)
+EOF
+
+chmod u+x $script_name
+
+$EDITOR $script_name

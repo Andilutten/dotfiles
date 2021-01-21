@@ -43,6 +43,7 @@ Plug 'jeffkreeftmeijer/vim-dim'
 
 " IDE features
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'puremourning/vimspector'
 
 " Task/Note managment
 Plug 'vimwiki/vimwiki'
