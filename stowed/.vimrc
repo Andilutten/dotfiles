@@ -1,9 +1,6 @@
 " Vim runtime configuration
 " Author: Andreas Malmqvist
 
-let $MYVIMRC="$HOME/.vimrc"
-let $MYTMUXRC="$HOME/.tmux.conf"
-
 syntax on
 filetype plugin on
 
@@ -37,7 +34,7 @@ Plug 'lambdalisue/vim-manpager'
 
 " Theming
 Plug 'tomasiser/vim-code-dark'
-Plug 'vim-airline/vim-airline'
+Plug 'jeffkreeftmeijer/vim-dim'
 
 " IDE features
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -65,13 +62,8 @@ let g:netrw_banner=0
 let g:vimwiki_list = [#{path: '~/Documents/'}]
 let g:coc_global_extensions = [
 			\ 'coc-marketplace', 
-			\ 'coc-lists',
-			\ 'coc-git',
-			\ 'coc-explorer'
+			\ 'coc-lists'
 			\ ]
-let g:airline_theme = 'codedark'
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#formatter = 'unique_tail'
 "}}}
 
 " compatibility {{{
@@ -89,14 +81,12 @@ endif
 if exists('+termguicolors')
 	let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
 	let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-	set termguicolors
 endif
 
 " }}}
 
 " {{{ options
 
-set showtabline=2
 set laststatus=2
 set noswapfile
 set encoding=utf8
@@ -105,10 +95,9 @@ set tabstop=4 shiftwidth=4
 set hlsearch incsearch
 set noexpandtab
 set signcolumn=auto
-set colorcolumn=121
 set path=**
 set ignorecase smartcase
-set number relativenumber
+" set number relativenumber
 set foldmethod=marker
 set foldmarker={{{,}}}
 set wildmenu
@@ -127,9 +116,16 @@ set t_Co=16
 
 " mappings {{{
 
+"" Buffer stuff
 nnoremap <leader>bn :bn<cr>
 nnoremap <leader>bp :bp<cr>
 nnoremap <leader>bd :bd<cr>
+
+"" Inline bash stuff
+nnoremap <leader>ee :.w !bash<cr>
+nnoremap <leader>ep :.!bash<cr>
+vnoremap <leader>ee :w !bash<cr>
+vnoremap <leader>ep :!bash<cr>
 
 nnoremap <leader>l :CocList<cr>
 nnoremap <leader>g :Git
@@ -209,7 +205,7 @@ augroup theming " {{{
 	autocmd!
 	autocmd ColorScheme * highlight EndOfBuffer ctermfg=0 guifg=bg
 	autocmd ColorScheme default call <SID>default_colorscheme_overrides()
-	colors codedark
+	colors dim
 augroup END " }}}
 
 augroup generic "{{{
