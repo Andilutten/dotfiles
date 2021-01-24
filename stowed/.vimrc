@@ -87,17 +87,15 @@ endif
 
 " {{{ options
 
-set laststatus=2
 set noswapfile
 set encoding=utf8
 set hidden magic
 set tabstop=4 shiftwidth=4
 set hlsearch incsearch
 set noexpandtab
-set signcolumn=auto
+set signcolumn=yes
 set path=**
 set ignorecase smartcase
-" set number relativenumber
 set foldmethod=marker
 set foldmarker={{{,}}}
 set wildmenu
@@ -122,10 +120,13 @@ nnoremap <leader>bp :bp<cr>
 nnoremap <leader>bd :bd<cr>
 
 "" Inline bash stuff
-nnoremap <leader>ee :.w !bash<cr>
-nnoremap <leader>ep :.!bash<cr>
-vnoremap <leader>ee :w !bash<cr>
-vnoremap <leader>ep :!bash<cr>
+nnoremap <silent> <leader>ee :.w !bash<cr>
+nnoremap <silent> <leader>ep :.!bash<cr>
+vnoremap <silent> <leader>ee :w !bash<cr>
+vnoremap <silent> <leader>ep :!bash<cr>
+
+"" Searching stuff
+nnoremap <leader><cr> :noh<cr>
 
 nnoremap <leader>l :CocList<cr>
 nnoremap <leader>g :Git
@@ -151,11 +152,13 @@ function! s:get_visual_selection()
 	return join(lines, "\n")
 endfunction
 
-function! s:default_colorscheme_overrides() abort
+function! s:dim_overrides() abort
 	highlight Folded ctermbg=8 ctermfg=none
 	highlight Pmenu ctermbg=8
 	highlight Visual term=none ctermbg=8
 	highlight Todo ctermbg=none ctermfg=3 cterm=bold,underline
+	highlight SignColumn ctermbg=none
+	highlight VertSplit ctermbg=none ctermfg=8
 endfunction
 
 function! s:coc_setup() abort "{{{
@@ -204,7 +207,7 @@ endfunction "}}}
 augroup theming " {{{
 	autocmd!
 	autocmd ColorScheme * highlight EndOfBuffer ctermfg=0 guifg=bg
-	autocmd ColorScheme default call <SID>default_colorscheme_overrides()
+	autocmd ColorScheme dim call <SID>dim_overrides()
 	colors dim
 augroup END " }}}
 
