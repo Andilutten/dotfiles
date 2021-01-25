@@ -59,7 +59,7 @@ let mapleader=' '
 let maplocalleader='`'
 let g:netrw_localrmdir='rm -r'
 let g:netrw_banner=0
-let g:vimwiki_list = [#{path: '~/Documents/'}]
+let g:vimwiki_list = [{'path': '~/Documents/'}]
 let g:coc_global_extensions = [
 			\ 'coc-marketplace', 
 			\ 'coc-lists'
@@ -87,6 +87,7 @@ endif
 
 " {{{ options
 
+set laststatus=1
 set noswapfile
 set encoding=utf8
 set hidden magic
@@ -127,6 +128,11 @@ vnoremap <silent> <leader>ep :!bash<cr>
 
 "" Searching stuff
 nnoremap <leader><cr> :noh<cr>
+
+"" Tmux stuff
+if exists("$TMUX") 
+	nnoremap <silent> <leader>to :!tmux_split_git_files<cr>
+endif
 
 nnoremap <leader>l :CocList<cr>
 nnoremap <leader>g :Git
@@ -239,7 +245,7 @@ augroup documenttypes "{{{
 	"" and wiki files.
 	autocmd!
 	let filetypes = ['markdown', 'vimwiki']
-	execute("autocmd FileType " . filetypes->join(',') . " setl nonumber norelativenumber")
+	execute("autocmd FileType " . join(filetypes, ',') . " setl nonumber norelativenumber")
 augroup END "}}}
 
 augroup cfamily "{{{

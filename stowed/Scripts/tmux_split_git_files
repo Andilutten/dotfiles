@@ -1,0 +1,9 @@
+#!/bin/bash
+# tmux_popup_git_files
+# Author: Andreas Malmqvist
+
+[ -z "$TMUX" ] && exit 1
+[ -z "$NVIM_LISTEN_ADDRESS" ] && exit 1
+
+tmux split -v "git ls-files | fzf | NVIM_LISTEN_ADDRESS=$NVIM_LISTEN_ADDRESS xargs nvr --nostart --remote"
+	

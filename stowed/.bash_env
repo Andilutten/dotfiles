@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Common env stuff
-export EDITOR="vim"
+export EDITOR="kak"
 export PROJECTS="$HOME/Projects"
 export SCRIPTS="$HOME/Scripts"
 

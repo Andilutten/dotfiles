@@ -1,0 +1,22 @@
+set-option -add global ui_options \
+	ncurses_assistant=none \
+	ncurses_status_on_top=true
+
+# add-highlighter global/ number-lines -relative -hlcursor
+colorscheme desertex
+set-face global BufferPadding black,default
+
+define-command tmux_popup_git_files %{
+    nop %sh{
+    	tmux popup -EK -R 'git ls-files | fzf'
+    }
+}
+
+## LSP stuff
+evaluate-commands %sh{kak-lsp --kakoune -s $kak_session}
+hook global WinSetOption filetype=(go|javascript|typescript) %{
+	lsp-enable-window
+	lsp-auto-hover-enable
+}
+
+map global user l %{: enter-user-mode lsp<ret>} -docstring "LSP mode"
