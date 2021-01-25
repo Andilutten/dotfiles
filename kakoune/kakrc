@@ -1,5 +1,3 @@
-map global normal <space> , -docstring 'leader'
-
 # User mode (FILES)
 declare-user-mode files
 map global user f %{: enter-user-mode files<ret>} -docstring "Files"
