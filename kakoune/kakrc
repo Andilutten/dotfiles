@@ -11,16 +11,21 @@ define-command -docstring "Find files using fzf through tmux" tmux-find-file %{
         		find . -type f > $TMPFILE
         	fi
 
-		fzf-tmux --prompt="Find file: " -p < $TMPFILE
+		fzf-tmux --prompt="Find file: " < $TMPFILE
 	}
 }
 map global files f %{: tmux-find-file<ret>} -docstring "Find file"
 map global files k %{: edit ~/.config/kak/kakrc<ret>} -docstring "Open kakrc"
 
+add-highlighter global/ number-lines -hlcursor -relative
+
 # OPTIONS
+set-option global docsclient docs
+set-option global jumpclient editor
+set-option global toolsclient tools
 set-option -add global ui_options \
 	ncurses_assistant=none \
-	ncurses_status_on_top=true
+	ncurses_status_on_top=false
 
 # THEMING
 colorscheme desertex

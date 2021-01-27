@@ -1,4 +1,7 @@
+#!/bin/bash
+
 [ -x "$(which exa)" ] && alias ls="exa"
 [ -x "$(which trash)" ] && alias rm="trash"
 
-[ ! -z "$TMUX" ] && export NVIM_LISTEN_ADDRESS="/tmp/$(tmux display -p '#S')"
+[ -x "$(which fzf)" ] && alias project="cd \$(find $PROJECTS -maxdepth 1 -type d | fzf)"
+
