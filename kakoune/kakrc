@@ -1,28 +1,49 @@
-# User mode (FILES)
+# USER MODE (FILES)
 declare-user-mode files
 map global user f %{: enter-user-mode files<ret>} -docstring "Files"
 define-command -docstring "Find files using fzf through tmux" tmux-find-file %{
 	edit %sh{
-    		TMPFILE=$(mktemp)
+		TMPFILE=$(mktemp)
 
-    		if git status > /dev/null 2>&1; then
-        		git ls-files > $TMPFILE
+    	if git status > /dev/null 2>&1; then
+        	git ls-files > $TMPFILE
 		else
-        		find . -type f > $TMPFILE
-        	fi
+        	find . -type f > $TMPFILE
+        fi
 
 		fzf-tmux --prompt="Find file: " < $TMPFILE
 	}
 }
-map global files f %{: tmux-find-file<ret>} -docstring "Find file"
-map global files k %{: edit ~/.config/kak/kakrc<ret>} -docstring "Open kakrc"
+define-command -docstring "Find files using fzf in gnome-terminal" gnome-find-file %{
+	edit %sh{
+		TMPFILE=$(mktemp)
+		READFILE=$(mktemp)
 
-add-highlighter global/ number-lines -hlcursor -relative
+		if git status > /dev/null 2>&1; then
+			git ls-files > $TMPFILE
+		else
+			find . -type f > $TMPFILE
+		fi
+
+		gnome-terminal --wait -- bash -c "fzf < $TMPFILE > $READFILE"
+		cat $READFILE
+	}
+}
+
+evaluate-commands %sh{
+    if [ -z "$TMUX" ]; then
+		echo 'map global files f %{: gnome-find-file<ret>} -docstring "Find file"'
+	else
+		echo 'map global files f %{: tmux-find-file<ret>} -docstring "Find file"'
+	fi
+}
+map global files k %{: edit ~/.config/kak/kakrc<ret>} -docstring "Open kakrc"
 
 # OPTIONS
 set-option global docsclient docs
 set-option global jumpclient editor
 set-option global toolsclient tools
+set-option global tabstop 4
 set-option -add global ui_options \
 	ncurses_assistant=none \
 	ncurses_status_on_top=false
@@ -30,13 +51,12 @@ set-option -add global ui_options \
 # THEMING
 colorscheme desertex
 set-face global BufferPadding black,default
+add-highlighter global/ number-lines -hlcursor -relative
 
-
-## LSP stuff
+## LSP
 evaluate-commands %sh{kak-lsp --kakoune -s $kak_session}
-hook global WinSetOption filetype=(go|javascript|typescript) %{
+hook global WinSetOption filetype=(go|javascript|typescript|c) %{
 	lsp-enable-window
 	lsp-auto-hover-enable
 }
-
 map global user l %{: enter-user-mode lsp<ret>} -docstring "LSP mode"
