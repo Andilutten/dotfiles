@@ -41,12 +41,11 @@ map global user x %{: enter-user-mode xclip<ret>} -docstring "Clipboard (xclip)"
 map global xclip y %{$ xclip -selection clipboard<ret>} -docstring "Copy selection"
 map global xclip p %{! xclip -selection clipboard -o<ret>} -docstring "Paste"
 
-## LSP stuff
+# LSP
 evaluate-commands %sh{kak-lsp --kakoune -s $kak_session}
-hook global WinSetOption filetype=(go|javascript|typescript) %{
+hook global WinSetOption filetype=(go|javascript|typescript|c) %{
 	lsp-enable-window
 	lsp-auto-hover-enable
 	lsp-auto-signature-help-enable
 }
-
 map global user l %{: enter-user-mode lsp<ret>} -docstring "LSP mode"
