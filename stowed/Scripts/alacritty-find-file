@@ -1,0 +1,15 @@
+#!/bin/bash
+# alacritty-find-file
+# Author: Andreas Malmqvist
+
+READFILE=$(mktemp)
+WRITEFILE=$(mktemp)
+
+if git status > /dev/null 2>&1; then
+    git ls-files > $READFILE
+else
+	find . -type f > $READFILE
+fi
+
+alacritty -e bash -c "fzf < $READFILE > $WRITEFILE"
+cat $WRITEFILE

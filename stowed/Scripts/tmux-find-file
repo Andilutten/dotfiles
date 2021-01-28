@@ -1,0 +1,13 @@
+#!/bin/bash
+# tmux-find-file
+# Author: Andreas Malmqvist
+
+TMPFILE=$(mktemp)
+
+if git status > /dev/null 2>&1; then
+    git ls-files > $TMPFILE
+else
+	find -type f > $TMPFILE
+fi
+
+fzf-tmux --prompt="find file:" < $TMPFILE
