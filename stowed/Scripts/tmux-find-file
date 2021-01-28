@@ -10,4 +10,4 @@ else
 	find -type f > $TMPFILE
 fi
 
-fzf-tmux --prompt="find file:" < $TMPFILE
+sk-tmux --prompt="find file:" < $TMPFILE

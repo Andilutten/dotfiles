@@ -1,0 +1,21 @@
+#!/bin/bash
+# Application launcher using fzf
+# Author: Andreas Malmqvist
+
+PATH_DIRECTORIES=$(mktemp)
+EXECUTABLES=$(mktemp)
+STRIPPED=$(mktemp)
+
+echo -e ${PATH//:/\\n} > $PATH_DIRECTORIES
+
+while read line; do
+    test -d $line || continue
+    find $line -type f -executable
+done < $PATH_DIRECTORIES > $EXECUTABLES
+
+while read line; do
+	basename $line
+done < $EXECUTABLES > $STRIPPED
+
+alacritty -e bash -c "exec \$(cat $STRIPPED | fzf) & disown"
+

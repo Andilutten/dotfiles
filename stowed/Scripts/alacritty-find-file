@@ -11,5 +11,5 @@ else
 	find . -type f > $READFILE
 fi
 
-alacritty -e bash -c "fzf < $READFILE > $WRITEFILE"
+alacritty -e bash -c "sk < $READFILE > $WRITEFILE"
 cat $WRITEFILE
