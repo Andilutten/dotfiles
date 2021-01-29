@@ -4,3 +4,4 @@ mkdir -p $HOME/.config/{kak,kak-lsp}
 
 ln -s $PWD/kakrc $HOME/.config/kak/kakrc
 ln -s $PWD/kak-lsp.toml $HOME/.config/kak-lsp/kak-lsp.toml
+ln -s $PWD/colors $HOME/.config/kak/colors

@@ -10,6 +10,7 @@ set-option -add global ui_options \
 	ncurses_status_on_top=false
 
 # THEMING
+colorscheme dracula-transparent
 set-face global BufferPadding black,default
 add-highlighter global/ number-lines -hlcursor -relative
 
