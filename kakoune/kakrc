@@ -1,52 +1,16 @@
-# OPTIONS
-set-option global docsclient docs
-set-option global jumpclient editor
-set-option global toolsclient tools
-set-option global tabstop 4
-set-option global indentwidth 0
-set-option global grepcmd 'rg -n'
-set-option -add global ui_options \
-	ncurses_assistant=none \
-	ncurses_status_on_top=false
-
-# THEMING
-colorscheme dracula-transparent
-set-face global BufferPadding black,default
-add-highlighter global/ number-lines -hlcursor -relative
-
-# User mode (FILES)
-declare-user-mode files
-map global user f %{: enter-user-mode files<ret>} -docstring "Files"
-define-command -docstring "Find files using skim through tmux" tmux-find-file %{
-	edit %sh{ tmux-find-file }
-}
-define-command -docstring "Find files using skim through alacritty" alacritty-find-file %{
-	edit %sh{ alacritty-find-file }
-}
-define-command -docstring "Interactive grep using skim through alacritty" alacritty-igrep %{
-	edit %sh{ alacritty-igrep }
-}
-alias global igrep alacritty-igrep
+# Source additional files
 evaluate-commands %sh{
-	test -z "$TMUX" \
-       	&& echo "alias global find-file alacritty-find-file" \
-       	|| echo "alias global find-file tmux-find-file"
-}
-map global files g %{: igrep<ret> } -docstring "Interactive grep"
-map global files f %{: find-file<ret>} -docstring "Find file"
-map global files k %{: edit ~/.config/kak/kakrc<ret>} -docstring "Open kakrc"
+	KAK_DIR=$HOME/.config/kak
+	SUB_DIRS="$KAK_DIR/modes $KAK_DIR/config"
 
-# User mode (XCLIP)
-declare-user-mode xclip
-map global user x %{: enter-user-mode xclip<ret>} -docstring "Clipboard (xclip)"
-map global xclip y %{$ xclip -selection clipboard<ret>} -docstring "Copy selection"
-map global xclip p %{! xclip -selection clipboard -o<ret>} -docstring "Paste"
-
-# LSP
-evaluate-commands %sh{kak-lsp --kakoune -s $kak_session}
-hook global WinSetOption filetype=(go|javascript|typescript|c) %{
-	lsp-enable-window
-	lsp-auto-hover-enable
-	lsp-auto-signature-help-enable
+	for dir in $SUB_DIRS; do
+		for file in $dir/*.kak; do
+			echo "source $file"
+		done
+	done
 }
-map global user l %{: enter-user-mode lsp<ret>} -docstring "LSP mode"
+
+# Load additional modules
+require-module file-mode
+require-module xclip-mode
+require-module utility-mode

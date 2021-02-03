@@ -46,8 +46,8 @@ window:
   # Blank space added around the window in pixels. This padding is scaled
   # by DPI and the specified value is always added at both opposing sides.
   padding:
-   x: 10
-   y: 10
+   x: 15
+   y: 15
 
   # Spread additional padding evenly around the terminal content.
   #dynamic_padding: false
@@ -111,11 +111,11 @@ font:
     #   - (macOS) Menlo
     #   - (Linux/BSD) monospace
     #   - (Windows) Consolas
-    family: Ubuntu Mono
-    # family: CaskaydiaCove Nerd Font Mono
+    # family: Ubuntu Mono
+    family: CaskaydiaCove Nerd Font
 
     # The `style` can be specified to pick a specific face.
-    style: Bold
+    style: Book
 
   # Bold font face
   #bold:
@@ -151,7 +151,7 @@ font:
     #style: Bold Italic
 
   # Point size
-  size: 10.0
+  size: 9.0
 
   # Offset is the extra space around each character. `offset.y` can be thought
   # of as modifying the line spacing, and `offset.x` as modifying the letter
@@ -337,60 +337,35 @@ font:
   #command: None
 
 
-# Dracula colors
+
+# Colors (Seagull)
 colors:
+  # Default colors
   primary:
-    background: '0x282a36'
-    foreground: '0xf8f8f2'
-  cursor:
-    text: CellBackground
-    cursor: CellForeground
-  vi_mode_cursor:
-    text: CellBackground
-    cursor: CellForeground
-  search:
-    matches:
-      foreground: '0x44475a'
-      background: '0x50fa7b'
-    focused_match:
-      foreground: '0x44475a'
-      background: '0xffb86c'
-    bar:
-      background: '0x282a36'
-      foreground: '0xf8f8f2'
-  line_indicator:
-    foreground: None
-    background: None
-  selection:
-    text: CellForeground
-    background: '0x44475a'
+    background: '0xffffff'
+    foreground: '0x61707a'
+
+  # Normal colors
   normal:
-    black:   '0x000000'
-    red:     '0xff5555'
-    green:   '0x50fa7b'
-    yellow:  '0xf1fa8c'
-    blue:    '0xbd93f9'
-    magenta: '0xff79c6'
-    cyan:    '0x8be9fd'
-    white:   '0xbfbfbf'
+    black:   '0x0b141a'
+    red:     '0xff4053'
+    green:   '0x11ab00'
+    yellow:  '0xbf8c00'
+    blue:    '0x0099ff'
+    magenta: '0x9854ff'
+    cyan:    '0x00a5ab'
+    white:   '0xffffff'
+
+  # Bright colors
   bright:
-    black:   '0x4d4d4d'
-    red:     '0xff6e67'
-    green:   '0x5af78e'
-    yellow:  '0xf4f99d'
-    blue:    '0xcaa9fa'
-    magenta: '0xff92d0'
-    cyan:    '0x9aedfe'
-    white:   '0xe6e6e6'
-  dim:
-    black:   '0x14151b'
-    red:     '0xff2222'
-    green:   '0x1ef956'
-    yellow:  '0xebf85b'
-    blue:    '0x4d5b86'
-    magenta: '0xff46b0'
-    cyan:    '0x59dffc'
-    white:   '0xe6e6d1'
+    black:   '0x0b141a'
+    red:     '0xff4053'
+    green:   '0x11ab00'
+    yellow:  '0xbf8c00'
+    blue:    '0x0099ff'
+    magenta: '0x9854ff'
+    cyan:    '0x00a5ab'
+    white:   '0xffffff'
 
 # Background opacity
 #

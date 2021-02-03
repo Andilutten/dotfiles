@@ -1,0 +1,17 @@
+#!/usr/bin/env python3
+# extract_urls
+# Extract urls from lines read from stdin
+# Prints the urls to stdout
+# Author: Andreas Malmqvist
+
+import re
+import fileinput
+
+flatten = lambda t: [item for sublist in t for item in sublist]
+
+urls = []
+for line in fileinput.input():
+	matches = re.findall(r'(https?://[\w\./_\-0-9?&]+)', line)
+	urls.append(matches)
+
+[print(url) for url in flatten(urls)]
