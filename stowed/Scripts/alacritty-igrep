@@ -3,7 +3,6 @@
 # Author: Andreas Malmqvist
 
 TMPFILE=$(mktemp)
-alacritty --title igrep -e bash -c "sk --ansi -i -c 'rg --color=always --line-number \"{}\"' > $TMPFILE"
-cat $TMPFILE | cut -d : -f 1,2
-
+alacritty --title igrep -e bash -c "sk --ansi -i -c 'rg --color=always -n \"{}\"' > $TMPFILE"
+cat $TMPFILE | tr : ' ' | cut -d ' ' -f 1,2
 

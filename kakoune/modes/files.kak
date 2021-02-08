@@ -8,7 +8,9 @@ define-command alacritty-find-file %{
 	edit %sh{ alacritty-find-file }
 }
 define-command alacritty-igrep %{
-	edit %sh{ alacritty-igrep }
+	evaluate-commands %sh{
+		printf %s\\n "edit $(alacritty-igrep)"
+	}
 }
 define-command edit-kak-config-file %{
 	edit %sh{
