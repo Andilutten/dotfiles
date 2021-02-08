@@ -76,7 +76,7 @@ evaluate-commands %sh{
          face global Error $black,$red
 
          # all status line: what we type, but also client@[session]
-         face global StatusLine $black,$white
+         face global StatusLine $black,default
          # insert mode, prompt mode
          face global StatusLineMode $white,$green
          # message like '1 sel'

@@ -10,6 +10,14 @@ evaluate-commands %sh{
 	done
 }
 
+# Rename first client on a session to editor
+hook global ClientCreate .* %{
+	evaluate-commands %sh{
+		test $(echo $kak_client_list | wc -w) -lt 2 \
+			&& echo "rename-client editor"
+	}
+}
+
 # Load additional modules
 require-module file-mode
 require-module xclip-mode
