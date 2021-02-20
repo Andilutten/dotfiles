@@ -1,0 +1,1 @@
+/home/andilutten/Projects/KakouneOneLight/one-light.kak

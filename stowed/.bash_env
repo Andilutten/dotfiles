@@ -2,6 +2,7 @@
 
 # Common env stuff
 export EDITOR="kak"
+export TERMINAL="st"
 export PROJECTS="$HOME/Projects"
 export SCRIPTS="$HOME/Scripts"
 

@@ -1,0 +1,1 @@
+/home/andilutten/Projects/kakoune-snow/snow-light.kak

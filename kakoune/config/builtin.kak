@@ -7,3 +7,7 @@ set-option global grepcmd 'rg -n'
 set-option -add global ui_options \
 	ncurses_assistant=none \
 	ncurses_status_on_top=false
+
+define-command -params 1 new-client %{
+	new rename-client %arg{1}
+}
