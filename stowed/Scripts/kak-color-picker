@@ -1,0 +1,24 @@
+#!/bin/bash
+# kak-color-picker
+# Uses yad to create a color picker for kakoune.
+# Author: Andreas Malmqvist
+
+set nocasematch
+read line
+
+colorpicker() {
+	local color="$1"
+	yad --color --init-color=$color | tr -d '\n'
+}
+
+hex_pattern="^#[0-9a-f]{6}$" 	# Regular hexadecimal pattern
+kak_pattern="^rgb:[0-9a-f]{6}$"	# Kak rgb face pattern
+
+if [[ "$line" =~ $hex_pattern ]]; then
+	colorpicker $line
+elif [[ "$line" =~ $kak_pattern ]]; then
+	output=$(colorpicker ${line/rgb:/#})
+	echo -n ${output/\#/rgb:}
+else
+	colorpicker "#ffffff"
+fi
