@@ -141,14 +141,6 @@ if executable('gopls')
 				\})
 endif
 
-if executable('dart')
-	call add(lsp_servers, #{
-				\ filetype: ['dart'],
-				\ path: 'dart',
-				\ args: ['language-server', '--client-id', 'andilutten.vim']
-				\})
-endif
-
 
 let lsp_options = #{
 			\ autoHighlightDiags: v:true,
