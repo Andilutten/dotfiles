@@ -109,6 +109,14 @@ endfunction
 
 let lsp_servers = []
 
+if executable('vim-language-server')
+	call add(lsp_servers, #{
+				\ filetype: ["vim"],
+				\ path: "vim-language-server",
+				\ args: ["--stdio"]
+				\ })
+endif
+
 if executable('typescript-language-server')
 	call add(lsp_servers, #{
 				\ filetype: ['javascript', 'typescript', 'javascriptreact', 'typescriptreact'],
