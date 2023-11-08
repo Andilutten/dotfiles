@@ -47,9 +47,7 @@ Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-tbone'
 Plug 'tpope/vim-flagship'
 Plug 'tpope/vim-endwise'
-Plug 'sainnhe/everforest'
 Plug 'mattn/emmet-vim'
-Plug 'jeffkreeftmeijer/vim-dim'
 Plug 'prettier/vim-prettier', { 'do': 'yarn install --frozen-lockfile --production' }
 Plug 'Andilutten/vim-laravel'
 Plug 'junegunn/vim-peekaboo'
@@ -61,6 +59,7 @@ Plug 'sheerun/vim-polyglot'
 Plug 'vimwiki/vimwiki'
 Plug 'fatih/vim-go'
 Plug 'vim-test/vim-test'
+Plug 'jeffkreeftmeijer/vim-dim'
 
 if has('vim9script')
 	Plug 'Donaldttt/fuzzyy'
@@ -86,14 +85,17 @@ set number relativenumber signcolumn=number
 set nowrap
 set completeopt=menuone,noinsert
 set notermguicolors
-set background=dark
 
 nmap § `
 
-autocmd ColorScheme * highlight EndOfBuffer ctermfg=0 guifg=background
 colors dim
+hi clear SpellLocal
+hi SpellLocal cterm=underline ctermfg=4
+hi clear SpellBad
+hi SpellBad cterm=underline ctermfg=1
 
 nnoremap <leader>fg <cmd>FuzzyGitFiles<cr>
+nnoremap <leader>fG <cmd>FuzzyGrep<cr>
 
 function! s:buffer_on_lsp() abort
   setl formatexpr=lsp#lsp#FormatExpr()
@@ -145,7 +147,7 @@ endif
 let lsp_options = #{
 			\ autoHighlightDiags: v:true,
 			\ noNewlineInCompletion: v:true,
-			\ autoComplete: v:false,
+			\ autoComplete: v:true,
 			\ autoPopulateDiags: v:false,
 			\}
 
