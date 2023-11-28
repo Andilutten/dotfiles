@@ -1,7 +1,6 @@
 " Vim configuration
 " Author: Andreas Malmqvist
 
-let g:tmuxline_powerline_separators = 0
 let test#strategy = "dispatch"
 let $MYTMUXRC = "~/.tmux.conf"
 autocmd FileType tmux let b:dispatch = "tmux source %:p"
@@ -47,24 +46,29 @@ Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-tbone'
 Plug 'tpope/vim-flagship'
 Plug 'tpope/vim-endwise'
+Plug 'tpope/vim-rake'
+Plug 'tpope/vim-ragtag'
+Plug 'tpope/vim-obsession'
+
+Plug 'junegunn/vim-peekaboo'
+Plug 'junegunn/GV.vim'
+
+Plug 'sainnhe/everforest'
 Plug 'mattn/emmet-vim'
 Plug 'prettier/vim-prettier', { 'do': 'yarn install --frozen-lockfile --production' }
 Plug 'Andilutten/vim-laravel'
-Plug 'junegunn/vim-peekaboo'
-Plug 'junegunn/GV.vim'
-Plug 'tommcdo/vim-lion'
 Plug 'itchyny/vim-qfedit'
 Plug 'TysonAndre/php-vim-syntax'
 Plug 'sheerun/vim-polyglot'
 Plug 'vimwiki/vimwiki'
 Plug 'fatih/vim-go'
 Plug 'vim-test/vim-test'
-Plug 'jeffkreeftmeijer/vim-dim'
+
+Plug '~/Projekt/vim-ghoul'
 
 if has('vim9script')
 	Plug 'Donaldttt/fuzzyy'
 	Plug 'yegappan/lsp'
-	Plug 'Eliot00/auto-pairs'
 endif
 
 call plug#end()
@@ -78,21 +82,18 @@ set backupdir=$HOME/.vim/backup
 set splitright splitbelow
 set path=**
 set wildmenu
-set showtabline=1
+set showtabline=2
 set laststatus=2
 set mouse=a
 set number relativenumber signcolumn=number
 set nowrap
 set completeopt=menuone,noinsert
-set notermguicolors
+set termguicolors
+set shell=/bin/bash
 
 nmap § `
 
-colors dim
-hi clear SpellLocal
-hi SpellLocal cterm=underline ctermfg=4
-hi clear SpellBad
-hi SpellBad cterm=underline ctermfg=1
+colors everforest
 
 nnoremap <leader>fg <cmd>FuzzyGitFiles<cr>
 nnoremap <leader>fG <cmd>FuzzyGrep<cr>
