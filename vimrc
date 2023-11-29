@@ -53,6 +53,7 @@ Plug 'tpope/vim-obsession'
 Plug 'junegunn/vim-peekaboo'
 Plug 'junegunn/GV.vim'
 
+Plug 'isobit/vim-caddyfile'
 Plug 'sainnhe/everforest'
 Plug 'mattn/emmet-vim'
 Plug 'prettier/vim-prettier', { 'do': 'yarn install --frozen-lockfile --production' }
