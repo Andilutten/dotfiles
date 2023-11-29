@@ -67,7 +67,7 @@ Plug 'vim-test/vim-test'
 
 Plug '~/Projekt/vim-ghoul'
 
-if has('vim9script') ||  v:version >= 900
+if has('vim9script') && v:version >= 900
 	Plug 'Donaldttt/fuzzyy'
 	Plug 'yegappan/lsp'
 endif
@@ -153,7 +153,7 @@ let lsp_options = #{
 			\ autoPopulateDiags: v:false,
 			\}
 
-if has('vim9script') ||  v:version >= 900
+if has('vim9script') && v:version >= 900
 	autocmd VimEnter * call LspAddServer(lsp_servers)
 	autocmd VimEnter * call LspOptionsSet(lsp_options)
 	autocmd User LspAttached call <sid>buffer_on_lsp()
