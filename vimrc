@@ -38,6 +38,9 @@ Plug 'tpope/vim-scriptease'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-projectionist'
+Plug 'tpope/vim-rails'
+Plug 'tpope/vim-rake'
+Plug 'tpope/vim-bundler'
 Plug 'tpope/vim-dadbod'
 Plug 'tpope/vim-dotenv'
 Plug 'tpope/vim-repeat'
@@ -51,12 +54,18 @@ Plug 'tpope/vim-ragtag'
 Plug 'tpope/vim-obsession'
 
 Plug 'junegunn/vim-peekaboo'
+Plug 'junegunn/vim-easy-align'
 Plug 'junegunn/GV.vim'
+Plug 'junegunn/seoul256.vim'
 
+Plug 'nicwest/vim-http'
+Plug 'tribela/vim-transparent'
+Plug 'vim-vdebug/vdebug'
+Plug 'liuchengxu/graphviz.vim'
 Plug 'isobit/vim-caddyfile'
 Plug 'sainnhe/everforest'
 Plug 'mattn/emmet-vim'
-Plug 'prettier/vim-prettier', { 'do': 'yarn install --frozen-lockfile --production' }
+" Plug 'prettier/vim-prettier', { 'do': 'yarn install --frozen-lockfile --production' }
 Plug 'Andilutten/vim-laravel'
 Plug 'itchyny/vim-qfedit'
 Plug 'TysonAndre/php-vim-syntax'
@@ -64,6 +73,7 @@ Plug 'sheerun/vim-polyglot'
 Plug 'vimwiki/vimwiki'
 Plug 'fatih/vim-go'
 Plug 'vim-test/vim-test'
+Plug 'lifepillar/vim-solarized8'
 
 Plug '~/Projekt/vim-ghoul'
 
@@ -83,18 +93,31 @@ set backupdir=$HOME/.vim/backup
 set splitright splitbelow
 set path=**
 set wildmenu
-set showtabline=2
+set showtabline=1
 set laststatus=2
 set mouse=a
 set number relativenumber signcolumn=number
 set nowrap
 set completeopt=menuone,noinsert
-set termguicolors
 set shell=/bin/bash
+set termguicolors
 
 nmap § `
 
-colors everforest
+if !has('gui_running')
+	if exists('$BASE16_THEME')
+		let base16colorspace=256
+		colorscheme base16-$BASE16_THEME
+		hi! link SpellLocal SignifySignChange
+		hi! link SpellBad SignifySignDelete
+	else
+		set background=dark
+		colors everforest
+	endif
+endif
+
+xmap ga <Plug>(EasyAlign)
+nmap ga <Plug>(EasyAlign)
 
 nnoremap <leader>fg <cmd>FuzzyGitFiles<cr>
 nnoremap <leader>fG <cmd>FuzzyGrep<cr>
@@ -145,12 +168,12 @@ if executable('gopls')
 				\})
 endif
 
-
 let lsp_options = #{
 			\ autoHighlightDiags: v:true,
 			\ noNewlineInCompletion: v:true,
 			\ autoComplete: v:true,
-			\ autoPopulateDiags: v:false,
+			\ autoPopulateDiags: v:true,
+			\ omniComplete: v:true
 			\}
 
 if has('vim9script') && v:version >= 900
