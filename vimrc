@@ -1,7 +1,12 @@
 " Vim configuration
 " Author: Andreas Malmqvist
 
+let g:vimwiki_list = [#{path: '~/vimwiki/',
+			\ template_path: '~/vimwiki/templates/',
+			\ template_default: 'default',
+			\ template_ext: '.html'}]
 let test#strategy = "dispatch"
+let g:graphviz_output_format = 'svg'
 let $MYTMUXRC = "~/.tmux.conf"
 autocmd FileType tmux let b:dispatch = "tmux source %:p"
 
@@ -56,14 +61,14 @@ Plug 'tpope/vim-obsession'
 Plug 'junegunn/vim-peekaboo'
 Plug 'junegunn/vim-easy-align'
 Plug 'junegunn/GV.vim'
-Plug 'junegunn/seoul256.vim'
 
+Plug 'chriskempson/base16-vim'
 Plug 'nicwest/vim-http'
-Plug 'tribela/vim-transparent'
 Plug 'vim-vdebug/vdebug'
 Plug 'liuchengxu/graphviz.vim'
 Plug 'isobit/vim-caddyfile'
 Plug 'sainnhe/everforest'
+Plug 'NLKNguyen/papercolor-theme'
 Plug 'mattn/emmet-vim'
 " Plug 'prettier/vim-prettier', { 'do': 'yarn install --frozen-lockfile --production' }
 Plug 'Andilutten/vim-laravel'
@@ -111,7 +116,7 @@ if !has('gui_running')
 		hi! link SpellLocal SignifySignChange
 		hi! link SpellBad SignifySignDelete
 	else
-		set background=dark
+		set background=light
 		colors everforest
 	endif
 endif
