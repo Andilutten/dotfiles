@@ -1,6 +1,5 @@
 " Vim configuration
 " Author: Andreas Malmqvist
-
 let g:vimwiki_list = [#{path: '~/vimwiki/',
 			\ template_path: '~/vimwiki/templates/',
 			\ template_default: 'default',
@@ -70,7 +69,7 @@ Plug 'isobit/vim-caddyfile'
 Plug 'sainnhe/everforest'
 Plug 'NLKNguyen/papercolor-theme'
 Plug 'mattn/emmet-vim'
-" Plug 'prettier/vim-prettier', { 'do': 'yarn install --frozen-lockfile --production' }
+Plug 'prettier/vim-prettier', { 'do': 'yarn install --frozen-lockfile --production' }
 Plug 'Andilutten/vim-laravel'
 Plug 'itchyny/vim-qfedit'
 Plug 'TysonAndre/php-vim-syntax'
@@ -78,9 +77,6 @@ Plug 'sheerun/vim-polyglot'
 Plug 'vimwiki/vimwiki'
 Plug 'fatih/vim-go'
 Plug 'vim-test/vim-test'
-Plug 'lifepillar/vim-solarized8'
-
-Plug '~/Projekt/vim-ghoul'
 
 if has('vim9script') && v:version >= 900
 	Plug 'Donaldttt/fuzzyy'
@@ -98,24 +94,33 @@ set backupdir=$HOME/.vim/backup
 set splitright splitbelow
 set path=**
 set wildmenu
-set showtabline=1
+set showtabline=2
 set laststatus=2
 set mouse=a
 set number relativenumber signcolumn=number
 set nowrap
 set completeopt=menuone,noinsert
 set shell=/bin/bash
-set termguicolors
+set background=dark
 
 nmap § `
+
+function! s:base16_overrides() abort
+	hi! link SpellLocal SignifySignChange
+	hi! link SpellBad SignifySignDelete
+endfunction
+
+augroup base16
+	autocmd!
+	autocmd ColorScheme base16-* call <sid>base16_overrides()
+augroup END
 
 if !has('gui_running')
 	if exists('$BASE16_THEME')
 		let base16colorspace=256
 		colorscheme base16-$BASE16_THEME
-		hi! link SpellLocal SignifySignChange
-		hi! link SpellBad SignifySignDelete
 	else
+		set termguicolors
 		set background=light
 		colors everforest
 	endif
